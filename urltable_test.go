@@ -13,7 +13,7 @@ func TestParse(t *testing.T) {
 		"get/ a / b / * / * / c/ **  ",
 		"get/ a / b / * / * / c/   ",
 	} {
-		paths, err := parse(pattern)
+		paths, err := Parse(pattern)
 		if err != nil {
 			t.Fatal(pattern, "should be legal; err: ", err.Error())
 		}
@@ -36,7 +36,7 @@ func TestParse(t *testing.T) {
 		"get/ a /  * /   / ",
 		"get/ a /  * / **  / ",
 	} {
-		if _, err := parse(pattern); err == nil {
+		if _, err := Parse(pattern); err == nil {
 			t.Fatal(pattern, "should be illegal")
 		}
 	}

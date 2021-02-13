@@ -14,7 +14,8 @@ const (
 	delimiter = "/"
 )
 
-func parse(pattern string) ([]string, error) {
+// Parse and validate pattern
+func Parse(pattern string) ([]string, error) {
 	const format = "[get, post, put, patch, delete]/{a-Z}+/{*}+/{**}"
 
 	if pattern = strings.TrimLeft(strings.TrimSpace(pattern), delimiter); pattern == "" {
@@ -86,7 +87,7 @@ func (t *Table) Size() int {
 
 // Append pattern
 func (t *Table) Append(pattern string) error {
-	paths, err := parse(pattern)
+	paths, err := Parse(pattern)
 	if err != nil {
 		return err
 	}
@@ -119,7 +120,7 @@ func (t *Table) Append(pattern string) error {
 
 // Mapping url to pattern
 func (t *Table) Mapping(url string) (string, error) {
-	paths, err := parse(url)
+	paths, err := Parse(url)
 	if err != nil {
 		return "", err
 	}

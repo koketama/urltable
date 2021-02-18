@@ -5,6 +5,17 @@ import (
 	"testing"
 )
 
+func TestFormat(t *testing.T) {
+	pattern, err := Format("get/ a / b / c   ")
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if pattern != "GET/a/b/c" {
+		t.Fatal("format failed")
+	}
+}
+
 func TestParse(t *testing.T) {
 	for i, pattern := range []string{
 		"get/ a / b / c   ",
@@ -13,7 +24,7 @@ func TestParse(t *testing.T) {
 		"get/ a / b / * / * / c/ **  ",
 		"get/ a / b / * / * / c/   ",
 	} {
-		paths, err := Parse(pattern)
+		paths, err := parse(pattern)
 		if err != nil {
 			t.Fatal(pattern, "should be legal; err: ", err.Error())
 		}
@@ -36,7 +47,7 @@ func TestParse(t *testing.T) {
 		"get/ a /  * /   / ",
 		"get/ a /  * / **  / ",
 	} {
-		if _, err := Parse(pattern); err == nil {
+		if _, err := parse(pattern); err == nil {
 			t.Fatal(pattern, "should be illegal")
 		}
 	}

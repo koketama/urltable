@@ -6,12 +6,12 @@ import (
 )
 
 func TestFormat(t *testing.T) {
-	pattern, err := Format("get/ a / b / c   ")
+	pattern, err := Format(" view  / a / b / c   ")
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	if pattern != "GET/a/b/c" {
+	if pattern != "VIEW/a/b/c" {
 		t.Fatal("format failed")
 	}
 }

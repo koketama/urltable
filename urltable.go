@@ -8,15 +8,16 @@ import (
 )
 
 const (
-	empty     = ""
-	fuzzy     = "*"
-	omitted   = "**"
-	delimiter = "/"
+	empty      = ""
+	fuzzy      = "*"
+	omitted    = "**"
+	delimiter  = "/"
+	methodView = "VIEW"
 )
 
 // parse and validate pattern
 func parse(pattern string) ([]string, error) {
-	const format = "[get, post, put, patch, delete]/{a-Z}+/{*}+/{**}"
+	const format = "[get, post, put, patch, delete, view]/{a-Z}+/{*}+/{**}"
 
 	if pattern = strings.TrimLeft(strings.TrimSpace(pattern), delimiter); pattern == "" {
 		return nil, errors.Errorf("pattern illegal, should in format of %s", format)
@@ -41,10 +42,11 @@ func parse(pattern string) ([]string, error) {
 		http.MethodPost,
 		http.MethodPut,
 		http.MethodPatch,
-		http.MethodDelete:
+		http.MethodDelete,
+		methodView:
 	default:
-		return nil, errors.Errorf("only supports [%s %s %s %s %s]",
-			http.MethodGet, http.MethodPost, http.MethodPut, http.MethodPatch, http.MethodDelete)
+		return nil, errors.Errorf("only supports [%s %s %s %s %s %s]",
+			http.MethodGet, http.MethodPost, http.MethodPut, http.MethodPatch, http.MethodDelete, methodView)
 	}
 
 	for k := 1; k < len(paths); k++ {
